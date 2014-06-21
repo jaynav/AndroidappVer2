@@ -1,0 +1,10 @@
+<!--styles/values-->
+<resources>
+
+    <style name="AppBase" parent="android:Theme.Holo.Light">
+
+        <!--add stuff to make custom at api level-->
+    </style>
+
+
+</resources>
