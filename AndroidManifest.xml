@@ -22,5 +22,10 @@
             </activity>
          <!--end setup activity-->
         <!--add another activity-->
+
+        <activity
+                android:name=".ShowListDetail">
+
+        </activity>
     </application>
 </manifest>

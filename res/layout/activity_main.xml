@@ -6,5 +6,23 @@
               android:orientation="vertical"
                tools:context=".MyActivity">
 
+    <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="55dp"
+            android:text="@string/First_View"
+            android:id="@+id/textView"
+            android:autoText="false"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:typeface="normal" android:clickable="false"/>
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="269dp"
+            android:id="@+id/listView"/><!--must implement a list activity for it to work-->
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="74dp"
+            android:text="@string/AddToList"
+            android:id="@+id/button"/>
 </LinearLayout>
 

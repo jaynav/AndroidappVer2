@@ -1,19 +1,18 @@
 package com.example.myapp;
 
-import android.app.ListActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
-import DBLayer.DBAccess;
 
-public class MyActivity extends ListActivity {
-    /**
-     * Called when the activity is first created.
-     */
- //on create goes here
+/**
+ * Created by ... on 6/23/2014. add activity to manifest
+ */
+public class ShowListDetail extends Activity {
+
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+    public void onCreate(Bundle derBundle) {
+        super.onCreate(derBundle);
+        setContentView(R.layout.list_detail);
 
 
 
@@ -50,8 +49,6 @@ public class MyActivity extends ListActivity {
     //on destroy goes here
     public void  onDestroy()
     {
-      super.onDestroy();
+        super.onDestroy();
     }
 }
-
-//normal methods not related to how android operates
