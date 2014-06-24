@@ -6,16 +6,16 @@ import android.view.Menu;
 import DBLayer.DBAccess;
 
 public class MyActivity extends ListActivity {
-    /**
-     * Called when the activity is first created.
-     */
+
+    private DBAccess accDB;
+    /** Called when the activity is first created.*/
  //on create goes here
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+//search for add btn
 
     }
 
