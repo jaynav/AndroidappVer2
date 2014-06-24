@@ -9,6 +9,9 @@ import android.content.Context;
  */
 public class HelpDBU {
 
+    /**
+     * Database operations come from the sqliteopenhelper class
+     */
     public static class DBHelperUtility extends SQLiteOpenHelper
     {
 

@@ -1,21 +1,21 @@
 package DBLayer;
 
-import DBLayer.IDB.IDBAccess;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
-import android.database.sqlite.SQLiteDatabase;
+import android.provider.ContactsContract;
 
 /**
- * Created by 5thinstall on 6/23/2014.
+ * Created by 5thinstall on 6/23/2014. 4 column database
  */
-public class DBAccess implements IDBAccess {
+public class DBAccess extends DbBase {
 
 //////////////////////////constructor//////////////////////////////////////
-    public DBAccess(Context derContext)
+    public DBAccess(Context dContext)
 {
-    this.derContext = derContext;
+
+    this.derContext = dContext;
 
 }
 /////////////////////////////methods/////////////////////////////
@@ -26,7 +26,8 @@ public class DBAccess implements IDBAccess {
     @Override
     public void open() throws SQLException
     {
-
+        derHelper = new HelpDBU.DBHelperUtility(derContext);
+        derDatabase = derHelper.getWritableDatabase();
     }
 
     /**
@@ -35,18 +36,21 @@ public class DBAccess implements IDBAccess {
     @Override
     public void close()
     {
-
+        derHelper.close();
+        derHelper = null;
+        derDatabase = null;
     }
 
     /**
      * creates row in datbase
      *
-     * @param derValue value of content
+     * @param derValue value of content string to be inserted
      */
     @Override
     public long createRow(ContentValues derValue)
+
     {
-        return 0;
+        return derDatabase.insert(DATABASE_TABLE ,null, derValue);
     }
 
     /**
@@ -57,8 +61,12 @@ public class DBAccess implements IDBAccess {
      */
     @Override
     public boolean updateRow(long rowId, ContentValues derValue)
+
     {
-        return false;
+        //return the update based on the table, string value, its location, and null for where clause since id already given
+         //derDatabase.execSQL("UPDATE DATABASE_TABLE SET title='"&title&"',body='"& body &"' WHERE ID ='"&rowId&"' " );
+
+        return derDatabase.update(DATABASE_TABLE, derValue, DBAccess.KEY_ROWID + "=" +rowId,null)> 0;
     }
 
     /**
@@ -69,7 +77,9 @@ public class DBAccess implements IDBAccess {
     @Override
     public boolean deleteRow(long rowId)
     {
-        return false;
+
+        return derDatabase.delete(DATABASE_TABLE,DBAccess.KEY_ROWID+ "="+rowId,null)> 0;
+
     }
 
     /**
@@ -77,8 +87,10 @@ public class DBAccess implements IDBAccess {
      */
     @Override
     public Cursor queryEverything()
+
     {
-        return null;
+        return derDatabase.query(DATABASE_TABLE, KEYS_ALL,null,null,null,null,DBAccess.KEY_TITLE + "ASC");
+
     }
 
     /**
@@ -87,13 +99,16 @@ public class DBAccess implements IDBAccess {
      * @param rowId row id
      */
     @Override
-    public Cursor normalQuery(long rowId)
+    public Cursor normalQuery(long rowId) throws SQLException
     {
-        return null;
+        Cursor cursor = derDatabase.query(true,DATABASE_TABLE,KEYS_ALL, KEY_ROWID+""+rowId,null,null,null,null,null);
+        cursor.moveToFirst();
+        return cursor;
     }
 
     /**
-     * creates android value hash to hold data/pass it to create and update
+     * creates android value hash to hold data/pass it to create and update that the ContentResolver can process
+     * it is held in the contentvalues api class
      *
      * @param title title of object
      * @param body the body of object
@@ -102,7 +117,11 @@ public class DBAccess implements IDBAccess {
     @Override
     public ContentValues createContentValue(String title, String body, int state)
     {
-        return null;
+        ContentValues value = new ContentValues();
+        value.put(KEY_TITLE,title);
+        value.put(KEY_BODY, body);
+        value.put(KEY_STATE, state);
+        return value;
     }
 
 
@@ -110,28 +129,5 @@ public class DBAccess implements IDBAccess {
 
 
 
-    ////////////////////variables/////////////////////////////////////
-    private Context derContext;
-    private SQLiteDatabase derDatabase;
-    private HelpDBU.DBHelperUtility derHelper;
 
-
-    //////////db definitions////////////////////////////
-    public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "dummyData";
-    public static final String DATABASE_TABLE = "addJunk";
-
-
-    public static final String KEY_ROWID = "_id";  // Android requires exactly this key name
-    public static final int INDEX_ROWID = 0;
-    public static final String KEY_TITLE = "title";
-    public static final int INDEX_TITLE = 1;
-    public static final String KEY_BODY = "body";
-    public static final int INDEX_BODY = 2;
-    public static final String KEY_STATE = "state";
-    public static final int INDEX_STATE = 3;
-    public static final String[] KEYS_ALL =
-            {
-                    DBAccess.KEY_ROWID, DBAccess.KEY_TITLE, DBAccess.KEY_BODY, DBAccess.KEY_STATE
-            };
 }

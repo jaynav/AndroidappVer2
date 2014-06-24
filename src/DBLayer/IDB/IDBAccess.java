@@ -31,7 +31,7 @@ public interface IDBAccess {
     Cursor queryEverything();
 
     /**asks for a specific query*/
-    Cursor normalQuery(long rowId);
+    Cursor normalQuery(long rowId)throws SQLException;
 
     /** creates android value hash to hold data/pass it to create and update*/
     ContentValues createContentValue(String title, String body, int state);
