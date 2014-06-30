@@ -82,5 +82,5 @@ public class MyActivity extends ListActivity {
 
     }
 
-    private static final String derRow ="rowid";
+    protected static final String derRow ="rowid";
 }

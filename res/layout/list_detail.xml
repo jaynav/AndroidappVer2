@@ -2,7 +2,7 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="match_parent"
+              android:layout_height="fill_parent"
               android:orientation="vertical"
               android:weightSum="1">
 
@@ -20,8 +20,37 @@
     <CheckBox
             style="@style/CheckBoxDStyle"
             android:text="@string/CheckDone"
-            android:id="@+id/checkBox"
+            android:id="@+id/chBx1"
+
 
            />
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".37"
+            />
+    <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight=".1"
+            >
+
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="cancel"
+                android:layout_weight="1"
+                android:onClick="cancelData"
+                android:id="@+id/button" android:layout_gravity="center_vertical"/>
+        <Button
+                android:layout_width="wrap_content"
+                android:layout_height="fill_parent"
+                android:text="New Button"
+                android:layout_weight="1"
+                android:onClick="saveData"
+                android:id="@+id/button2" android:layout_gravity="center_vertical"/>
+    </LinearLayout>
+
 
 </LinearLayout>
