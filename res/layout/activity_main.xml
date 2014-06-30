@@ -22,7 +22,7 @@
     <Button
             android:layout_width="wrap_content"
             android:layout_height="74dp"
-            android:text="@string/AddToList"
-            android:id="@+id/button"/>
+            android:text="@string/NewItemBtnText"
+            android:id="@+id/NewItemBtn"/>
 </LinearLayout>
 

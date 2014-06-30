@@ -1,8 +1,11 @@
 package com.example.myapp;
 
+import DBLayer.DBAccess;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.widget.CheckBox;
+import android.widget.EditText;
 
 /**
  * Created by ... on 6/23/2014. add activity to manifest
@@ -51,4 +54,10 @@ public class ShowListDetail extends Activity {
     {
         super.onDestroy();
     }
+
+    //////////////////////////////fields/////////////////
+    private DBAccess derDB;
+    private Long rowIdToEdit;
+    private EditText textVeneer1, textVeneer2;
+    private CheckBox boxEditable;
 }

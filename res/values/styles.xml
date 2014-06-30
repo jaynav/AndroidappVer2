@@ -6,5 +6,25 @@
         <!--add stuff to make custom at api level-->
     </style>
 
+    <style name="DetailStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.18</item>
+        <item name="android:editable">true</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
+    <style name="CheckBoxDStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">0.18</item>
+        <item name="android:capitalize">characters</item>
+        <item name="android:clickable">true</item>
+        <item name="android:gravity">center</item>
+        <item name="android:singleLine">false</item>
+        <item name="android:typeface">sans</item>
+    </style>
+
 
 </resources>
