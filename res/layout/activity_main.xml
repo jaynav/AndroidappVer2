@@ -23,6 +23,9 @@
             android:layout_width="wrap_content"
             android:layout_height="74dp"
             android:text="@string/NewItemBtnText"
-            android:id="@+id/NewItemBtn"/>
+            android:id="@+id/NewItemBtn"
+            android:onClick="addStuff"
+            />
+
 </LinearLayout>
 

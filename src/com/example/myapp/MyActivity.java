@@ -11,7 +11,7 @@ import android.widget.Button;
 
 public class MyActivity extends ListActivity {
 
-    private DBAccess accDB;
+
     /** Called when the activity is first created.*/
  //on create goes here
     @Override
@@ -19,17 +19,10 @@ public class MyActivity extends ListActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //search for add btn
-        Button findBtn = (Button) findViewById(R.id.NewItemBtn);
-      //lambda not supported in dalvik.. boo
-      // findBtn.setOnClickListener(lambdaView -> editListDetail(0, true));
-        findBtn.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                editListDetail(0,true);
-            }
-        });
-        ////////////////////////////////////////////end on click listener
+        //startDB
+        accDB = new DBAccess(this);
+        accDB.open();
+
     }
 
 
@@ -44,6 +37,7 @@ public class MyActivity extends ListActivity {
     @Override
     public void onResume()
     {
+
         super.onResume();
     }
 
@@ -51,6 +45,7 @@ public class MyActivity extends ListActivity {
     @Override
     public void onPause()
     {
+
         super.onPause();
     }
 
@@ -58,6 +53,7 @@ public class MyActivity extends ListActivity {
     @Override
     public void onSaveInstanceState(Bundle outSaveState)
     {
+
         super.onSaveInstanceState(outSaveState);
     }
 
@@ -65,6 +61,7 @@ public class MyActivity extends ListActivity {
     public void  onDestroy()
     {
       super.onDestroy();
+        accDB.close();
     }
 
 
@@ -82,5 +79,11 @@ public class MyActivity extends ListActivity {
 
     }
 
+    public void  addStuff(View derVeiw)
+    {
+        editListDetail(0,true);
+    }
+    ///////////////////////////////////////////////////////////////////
+    private DBAccess accDB;
     protected static final String derRow ="rowid";
 }
