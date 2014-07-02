@@ -44,11 +44,11 @@ public class ShowListDetail extends Activity {
 
 
         /////////open new DB Instance
-        derDB = new DBAccess(this);
-        derDB.open();
+       // derDB = new DBAccess(this);
+       // derDB.open();
 
         /////update UI state
-        updatUI();
+     //   updatUI();
 
 
 
@@ -75,7 +75,7 @@ public class ShowListDetail extends Activity {
 
     {
         super.onPause();
-        saveDataDB();
+       // saveDataDB();
     }
 
     //on save goes here
@@ -92,7 +92,7 @@ public class ShowListDetail extends Activity {
     public void  onDestroy()
     {
         super.onDestroy();
-        derDB.close();
+      //  derDB.close();
     }
 ///////////////////////////////////////////////////////
 // the finish call forces onpause

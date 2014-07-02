@@ -22,7 +22,7 @@ public interface IDBAccess {
     long createRow(ContentValues derValue);
 
     /**update the data row based on id*/
-    boolean updateRow(long rowId,ContentValues derValue);
+    boolean updateRow(long rowId, ContentValues derValue);
 
     /**deletes row in dba*/
     boolean deleteRow(long rowId);

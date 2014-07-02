@@ -3,11 +3,11 @@ package com.example.myapp;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import DBLayer.DBAccess;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.widget.Button;
+import android.widget.Toast;
 
 public class MyActivity extends ListActivity {
 
@@ -20,8 +20,8 @@ public class MyActivity extends ListActivity {
         setContentView(R.layout.activity_main);
 
         //startDB
-        accDB = new DBAccess(this);
-        accDB.open();
+      //  accDB = new DBAccess(this);
+       // accDB.open();
 
     }
 
@@ -81,8 +81,15 @@ public class MyActivity extends ListActivity {
 
     public void  addStuff(View derVeiw)
     {
-        editListDetail(0,true);
-    }
+        try {
+            editListDetail(0, true);
+        }
+        catch (Exception ex)
+        {
+           Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG);
+            Log.e(ex.getMessage(),"error in addstuff");
+        }
+        }
     ///////////////////////////////////////////////////////////////////
     private DBAccess accDB;
     protected static final String derRow ="rowid";
