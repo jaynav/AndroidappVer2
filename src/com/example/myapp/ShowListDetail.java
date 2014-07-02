@@ -1,6 +1,6 @@
 package com.example.myapp;
 
-import DBLayer.DBAccess;
+
 import android.app.Activity;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -22,35 +22,32 @@ public class ShowListDetail extends Activity {
         //find and set data for textboxes
         textVeneer1 = (EditText) findViewById(R.id.detailTextView1);
         textVeneer2 = (EditText) findViewById(R.id.detailTextView2);
-        boxEditable = (CheckBox) findViewById(R.id.chBx1);
+        chBxE = (CheckBox) findViewById(R.id.chBx1);
 
         //////
-        rowIdToEdit = null;
+        mRowI = null;
 
         if(derBundle == null)
         { //used to edit existing row
             Bundle xtra = getIntent().getExtras();
 
-            if(xtra != null && xtra.containsKey(MyActivity.derRow))
+            if(xtra != null && xtra.containsKey(MyActivity.EXTRA_ROWID))
             {
                 //sets value based on key
-                rowIdToEdit =xtra.getLong(MyActivity.derRow);
+                mRowI =xtra.getLong(MyActivity.EXTRA_ROWID);
             }
         }
         else
         {  //aimed for recovery purposes using on saveinstance to recover based on key
-            rowIdToEdit =derBundle.getLong(Save_ROW);
+            mRowI =derBundle.getLong(Save_ROW);
         }
 
 
         /////////open new DB Instance
-       // derDB = new DBAccess(this);
-       // derDB.open();
+       mDb = new TDB(this);
+        mDb.open();
 
-        /////update UI state
-     //   updatUI();
-
-
+        dbToUI();
 
     }
 
@@ -75,7 +72,7 @@ public class ShowListDetail extends Activity {
 
     {
         super.onPause();
-       // saveDataDB();
+       saveDataDB();
     }
 
     //on save goes here
@@ -84,7 +81,7 @@ public class ShowListDetail extends Activity {
 
     {
         super.onSaveInstanceState(outSaveState);
-        outSaveState.putLong(Save_ROW, rowIdToEdit);
+        outSaveState.putLong(Save_ROW, mRowI);
 
     }
 
@@ -92,7 +89,7 @@ public class ShowListDetail extends Activity {
     public void  onDestroy()
     {
         super.onDestroy();
-      //  derDB.close();
+      mDb.close();
     }
 ///////////////////////////////////////////////////////
 // the finish call forces onpause
@@ -109,6 +106,22 @@ public class ShowListDetail extends Activity {
         finish();
     }
 
+    private void dbToUI() {
+        if (mRowI != null) {
+            Cursor cursor = mDb.query(mRowI);
+            // Note: a cursor should be closed after use, or "managed".
+
+            // Could use cursor.getColumnIndex(columnName) to look up 0, 1, ... index
+            // for each column name. Here use INDEX_ consts from TodoDB.
+            textVeneer1.setText(cursor.getString(TDB.INDEX_TITLE));
+            textVeneer2.setText(cursor.getString(TDB.INDEX_BODY));
+            chBxE.setChecked(cursor.getInt(TDB.INDEX_STATE) > 0);
+
+            cursor.close();
+        }
+    }
+
+
     protected void saveDataDB()
     {
 
@@ -117,15 +130,15 @@ public class ShowListDetail extends Activity {
         {
             String DerTitle = textVeneer1.getText().toString();
             String CenterSection = textVeneer2.getText().toString();
-            int chBX = checkboxChecked(boxEditable);
+            int chBX = checkboxChecked(chBxE);
 
-            if (rowIdToEdit ==null)
+            if (mRowI ==null)
             {
-                derDB.createRow(derDB.createContentValue(DerTitle, CenterSection, chBX));
+                mRowI = mDb.createRow(mDb.createContentValues(DerTitle,CenterSection,chBX));
             }
             else
             {
-                derDB.updateRow(rowIdToEdit,derDB.createContentValue(DerTitle,CenterSection,chBX));
+                mDb.updateRow(mRowI, mDb.createContentValues(DerTitle,CenterSection,chBX));
             }
         }
 
@@ -140,24 +153,15 @@ public class ShowListDetail extends Activity {
         return 0;
     }
 
-    protected void updatUI()
-    {
-        if(rowIdToEdit != null);
-        {
-            Cursor cr = derDB.normalQuery(rowIdToEdit);
-            textVeneer1.setText((cr.getString(DBAccess.INDEX_TITLE)));
-            textVeneer2.setText((cr.getString(DBAccess.INDEX_BODY)));
-            boxEditable.setChecked(cr.getInt(DBAccess.INDEX_STATE)> 0);
-            cr.close();
-        }
 
-    }
 
     //////////////////////////////fields/////////////////
-    private DBAccess derDB;
-    private Long rowIdToEdit;
+    private  TDB mDb;
+
+    private Long mRowI;
+
     private EditText textVeneer1, textVeneer2;
-    private CheckBox boxEditable;
+    private CheckBox chBxE;
     private boolean trashData;
     public static final String Save_ROW = "saverow";
 }
