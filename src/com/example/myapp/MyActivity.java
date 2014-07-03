@@ -8,10 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.*;
 
 public class MyActivity extends ListActivity {
 
@@ -35,22 +32,28 @@ public class MyActivity extends ListActivity {
         startManagingCursor(cursor);
 
         // Adapter: maps cursor keys, to R.id.XXX fields in the row layout.
-        String[] from = new String[] { TDB.KEY_TITLE, TDB.KEY_STATE };
-        int[] to = new int[] { R.id.listViewDetail, R.id.listViewDetail2 };
+        //sets it back to listview
+        String[] from = new String[] { TDB.KEY_TITLE, TDB.KEY_BODY, TDB.KEY_STATE };
+        int[] to = new int[] { R.id.listViewDetail, R.id.listViewDetail2 ,R.id.imageView };
         mCursorAdapter = new SimpleCursorAdapter(this, R.layout.listviewlayout, cursor, from, to);
 
 
+
+        //change this to an icon instead
        // Map "state" int to text in the row -- intercept the setup of each row view,
-        // fiddle with the data for the state column.
+
         mCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 if (columnIndex == TDB.INDEX_STATE) {
-                    TextView txView = (TextView) view;
+                    //TextView txView = (TextView) view;
+                    ImageView imView = (ImageView) view;
                     if (cursor.getInt(TDB.INDEX_STATE) > 0) {
-                        txView.setText(" (done) ");
+                        //txView.setText(" (done) ");
+                        imView.setImageResource(R.drawable.likebtn);
                     }
                     else {
-                        txView.setText("");
+                        //txView.setText("Not");
+                        imView.setImageResource(R.drawable.th);
                     }
                     return true;  // i.e. we handled it
                 }
@@ -148,7 +151,7 @@ public class MyActivity extends ListActivity {
     public void remove(long rowI)
     {
         mDb.deleteRow(rowI);
-        mCursorAdapter.getCursor().requery();
+        mCursorAdapter.getCursor().requery();/////////change this
     }
     ///////////////////////////////////////////////////////////////////
 

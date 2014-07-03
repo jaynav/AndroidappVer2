@@ -19,7 +19,7 @@
 
     <CheckBox
             style="@style/CheckBoxDStyle"
-            android:text="@string/CheckDone"
+            android:text="@string/LiDChbx"
             android:id="@+id/chBx1"
 
 
@@ -39,14 +39,14 @@
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="cancel"
+                android:text="@string/cancelBTN"
                 android:layout_weight="1"
                 android:onClick="cancelData"
                 android:id="@+id/button" android:layout_gravity="center_vertical"/>
         <Button
                 android:layout_width="wrap_content"
                 android:layout_height="fill_parent"
-                android:text="New Button"
+                android:text="@string/addupdateBTN"
                 android:layout_weight="1"
                 android:onClick="saveData"
                 android:id="@+id/button2" android:layout_gravity="center_vertical"/>

@@ -31,12 +31,6 @@ public class TDB  extends TDBInterFaceAbstraction {
 		mDatabase = null;
 	}
 
-
-	/**
-	  Creates and inserts a new row using the given values.
-	  Returns the rowid of the new row, or -1 on error.
-	  todo: values should not include a rowid I assume.
-	 */
 	public long createRow(ContentValues values) {
 		return mDatabase.insert(DATABASE_TABLE, null, values);
 	}
@@ -68,10 +62,6 @@ public class TDB  extends TDBInterFaceAbstraction {
 			TDB.KEY_TITLE + " ASC"  // order-by, "DESC" for descending
 		);
 
-		// Could pass for third arg to filter in effect:
-		// TodoDatabaseHelper.KEY_STATE + "=0"
-
-		// query() is general purpose, here we show the most common usage.
 	}
 
 	/** Returns a cursor for the given row id. Caller should close or manage the cursor. */

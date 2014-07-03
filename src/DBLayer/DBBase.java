@@ -11,14 +11,14 @@ public abstract class DBBase  {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     public static final int DATABASE_VERSION = 1;
-    public static final String DATABASE_NAME = "tododb";
-    public static final String DATABASE_TABLE = "todo";
+    public static final String DATABASE_NAME = "derp";
+    public static final String DATABASE_TABLE = "herp";
 
     // Field names -- use the KEY_XXX constants here and in
     // client code, so it's all consistent and checked at compile-time.
 
     public static final String KEY_ROWID = "_id";  // Android requires exactly this key name
-    public static final int INDEX_ROWID = 0;
+   // public static final int INDEX_ROWID = 0;
     public static final String KEY_TITLE = "title";
     public static final int INDEX_TITLE = 1;
     public static final String KEY_BODY = "body";

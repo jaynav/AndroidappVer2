@@ -7,4 +7,12 @@
     <string name="firstN">FirstName</string>
     <string name="secondN">SecondName</string>
     <string name="CheckDone">Done?</string>
+    <string name="DetailView1">FName</string>
+    <string name="DetailView2">SName</string>
+    <string name="DetailView3">UDone</string>
+    <string name="liDFName">First Name</string>
+    <string name="liDLName">Last Name</string>
+    <string name="LiDChbx">Are you Done</string>
+    <string name="cancelBTN">Cancel</string>
+    <string name="addupdateBTN">Add/Update</string>
 </resources>
