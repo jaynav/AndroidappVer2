@@ -5,8 +5,9 @@ import IDBasic.IDBasic;
 
 /**
  * Created by 5thinstall on 7/2/2014.
+ * core abstraction of DB Layer
  */
-public abstract class DBBase implements IDBasic {
+public abstract class DBBase  {
 
     /////////////////////////////////////////////////////////////////////////////////////////////
     public static final int DATABASE_VERSION = 1;

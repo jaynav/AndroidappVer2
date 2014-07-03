@@ -1,17 +1,17 @@
 package DBLayer;
 
+import DBLayer.HelperInterAbs.TDBInterFaceAbstraction;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
 
 /**
  * changing metherd
  *
  */
-public class TDB  extends DBBase{
+public class TDB  extends TDBInterFaceAbstraction {
 
     /** Constructor DB for this activity context. */
     public TDB(Context context) {
@@ -20,7 +20,7 @@ public class TDB  extends DBBase{
 
 	/** Opens up a connection to the database. Do this before any operations. */
 	public void open() throws SQLException {
-		mHelper = new TodoDBHelper(mContext);
+		mHelper = new DBHelper.TodoDBHelper(mContext);
 		mDatabase = mHelper.getWritableDatabase();
 	}
 
@@ -97,42 +97,10 @@ public class TDB  extends DBBase{
 	
 	// Helper for database open, create, upgrade.
 	// Here written as a private inner class to TDB.
-	private static class TodoDBHelper extends SQLiteOpenHelper {
-		// SQL text to create table (basically just string or integer)
-		private static final String DATABASE_CREATE =
-			"create table " + DATABASE_TABLE + " (" +
-			TDB.KEY_ROWID + " integer primary key autoincrement, " +
-			TDB.KEY_TITLE + " text not null, " +
-			TDB.KEY_BODY + " text not null," +
-			TDB.KEY_STATE + " integer " +
-			");";
-
-		// SQLITE does not have a complex type system, so although "done" is a boolean
-		// to the app, here we store it as an integer with (0 = false)
-
-
-		public TodoDBHelper(Context context) {
-			super(context, DATABASE_NAME, null, DATABASE_VERSION);
-		}
-
-		/** Creates the initial (empty) database. */
-		@Override
-		public void onCreate(SQLiteDatabase database) {
-			database.execSQL(DATABASE_CREATE);
-		}
-
-
-		/** Called at version upgrade time, in case we want to change/migrate
-		 the database structure. Here we just do nothing. */
-		@Override
-		public void onUpgrade(SQLiteDatabase database, int oldVersion, int newVersion) {
-			// we do nothing for this case
-		}
-	}
 
 ///////////////////////////////////////////////////////////
 private Context mContext;
     private SQLiteDatabase mDatabase;
-    private TodoDBHelper mHelper;
+    private DBHelper.TodoDBHelper mHelper;
 
 }
