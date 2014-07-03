@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">myapp</string>
+    <string name="actionBar_settings">Settings</string>
+    <string name="First_View">New Text</string>
+    <string name="NewItemBtnText">Add New Data</string>
+    <string name="firstN">FirstName</string>
+    <string name="secondN">SecondName</string>
+    <string name="CheckDone">Done?</string>
+</resources>
