@@ -3,14 +3,15 @@ package com.example.myapp;
 import DBLayer.TDB;
 import android.app.ListActivity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
-import android.os.Bundle;
+import android.os.Bundle;;
+import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.Menu;
-import android.view.View;
+import android.view.*;
 import android.widget.*;
 
-public class MyActivity extends ListActivity {
+public class MyActivity extends ListActivity implements ActionMode.Callback, AdapterView.OnItemLongClickListener{
 
 
     /** Called when the activity is first created.*/
@@ -45,10 +46,10 @@ public class MyActivity extends ListActivity {
         mCursorAdapter.setViewBinder(new SimpleCursorAdapter.ViewBinder() {
             public boolean setViewValue(View view, Cursor cursor, int columnIndex) {
                 if (columnIndex == TDB.INDEX_STATE) {
-                    //TextView txView = (TextView) view;
+
                     ImageView imView = (ImageView) view;
                     if (cursor.getInt(TDB.INDEX_STATE) > 0) {
-                        //txView.setText(" (done) ");
+
                         imView.setImageResource(R.drawable.likebtn);
                     }
                     else {
@@ -66,14 +67,20 @@ public class MyActivity extends ListActivity {
 
         setListAdapter(mCursorAdapter);
         registerForContextMenu(getListView());
-    }
 
 
-    @Override
-    //action bar
-    public boolean onCreateOptionsMenu(Menu derMenu){
-        getMenuInflater().inflate(R.menu.main, derMenu);
-        return true;
+        //aimed  for context/ actionmode menu
+        modeView =getListView();
+        getListView().setLongClickable(true);
+        getListView().setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        getListView().setOnItemLongClickListener(this);
+
+
+        //read preferences too much crap on OnCreate....made own metherd
+
+         loadPref();
+
+
     }
 
     //on resume goes here
@@ -106,23 +113,125 @@ public class MyActivity extends ListActivity {
       super.onDestroy();
       mDb.close();
     }
-//part of actionBar menu items
+///////////////////////////////////////////////////part of actionBar menu items
 
-  /*  public  boolean onOptionsItemSelected(MenuItem itm)
+
+    @Override
+    //action bar
+    public boolean onCreateOptionsMenu(Menu derMenu){
+        getMenuInflater().inflate(R.menu.main, derMenu);
+        return true;
+    }
+    public  boolean onOptionsItemSelected(MenuItem itm)
     {
+
         switch (itm.getItemId())
+        {
+            case R.id.actionBar_settings:
+                startPreferenceDetail();
+                return  true;
+            default:
+                return super.onOptionsItemSelected(itm);
+        }
+
+
+   }
+
+
+
+   //////////////////////////////////////////////////////////context menu/actionMode
+    public boolean onItemLongClick(AdapterView<?> view,View row, int position, long id)
     {
+        modeView.clearChoices();
+        modeView.setItemChecked(position,true);
+        dtaHelper = id;
+        if(activeMode == null)
+        {
+            activeMode= startActionMode(this);
+        }
+        return  true;
 
     }
+   @Override
+   public boolean onCreateActionMode(ActionMode mode, Menu menu)
+   {
+       mode.getMenuInflater().inflate(R.menu.contextual_acton_mode, menu);
+       mode.setTitle("edit");
+       return true;
+   }
+
+    @Override
+    public boolean onPrepareActionMode(ActionMode mode, Menu menu)
+    {
+        return false;
     }
-*/
-//normal methods not related to how android operates
+
+    @Override
+    public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+
+
+         switch (item.getItemId())
+        {
+            case R.id.contextualAction_remove:
+                    removeStuff(dtaHelper);
+                return true;
+        default:
+        return false;
+    }
+    }
+
+    @Override
+    public void onDestroyActionMode(ActionMode mode) {
+
+        activeMode = null;
+    }
+
+
+
+
+////////////////////////////////////////////normal methods not related to how android operates
 
     public void onListItemClick(ListView lv, View deView, int pos, long rowI)
     {
         super.onListItemClick(lv,deView, pos, rowI);
         editListDetail(rowI,false);
     }
+
+
+
+    public void  addStuff(View derVeiw)
+    {
+        try {
+            editListDetail(0, true);
+        }
+        catch (Exception ex)
+        {
+           Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG).show();
+            Log.e(ex.getMessage(),"error in addstuff");
+        }
+        }
+
+
+    public void removeStuff(long rowI)
+    {
+        mDb.deleteRow(rowI);
+        mCursorAdapter.getCursor().requery();/////////change this
+    }
+
+    /**
+     * reading preference
+     * made to get rid of crap on on create
+     */
+    public  void loadPref()
+    {
+       PreferenceManager.setDefaultValues(this, "omgt",MODE_PRIVATE, R.xml.my_preferences, false);
+        txtToChange = (TextView) findViewById(R.id.textView);
+       SharedPreferences shareMe = PreferenceManager.getDefaultSharedPreferences(this);
+       //String dahValue = shareMe.getString("PValue", getString(R.string.PreferenceView));
+       txtToChange.setText(shareMe.getString("PValue", getString(R.string.PreferenceView)));
+
+    }
+    ///////////////////////////////intent startr////////////////////////////////////
 
     private void editListDetail(long rowId, boolean b)
     {
@@ -135,27 +244,22 @@ public class MyActivity extends ListActivity {
 
     }
 
-    public void  addStuff(View derVeiw)
+    protected void startPreferenceDetail()
     {
-        try {
-            editListDetail(0, true);
-        }
-        catch (Exception ex)
-        {
-           Toast.makeText(this,ex.getMessage(),Toast.LENGTH_LONG);
-            Log.e(ex.getMessage(),"error in addstuff");
-        }
-        }
-
-
-    public void remove(long rowI)
-    {
-        mDb.deleteRow(rowI);
-        mCursorAdapter.getCursor().requery();/////////change this
+        Intent derIntent = new Intent(this, StartPrefActivity.class);
+        startActivity(derIntent);
     }
-    ///////////////////////////////////////////////////////////////////
 
+    ///////////////////////////////////////////////////////////////////////////
 public static final String EXTRA_ROWID = "rowid";
     private SimpleCursorAdapter mCursorAdapter;
     private TDB mDb;
+    ActionMode activeMode;
+    ListView modeView;
+    long dtaHelper;
+    TextView txtToChange;
+    StartPrefActivity demo;
+
+
+
 }

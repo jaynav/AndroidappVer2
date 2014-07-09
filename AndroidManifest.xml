@@ -25,5 +25,8 @@
                 android:name=".ShowListDetail">
 
         </activity>
-    </application>
+<activity android:name=".StartPrefActivity"
+        android:label="preferenceSettings"/>
+
+           </application>
 </manifest>
