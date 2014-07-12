@@ -5,6 +5,10 @@ import android.app.ListActivity;
 import android.content.Intent; import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
+<<<<<<< HEAD
+=======
+import android.preference.PreferenceManager;
+>>>>>>> origin/master
 import android.util.Log;
 import android.view.*;
 import android.widget.*;
