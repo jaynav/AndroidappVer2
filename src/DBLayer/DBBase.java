@@ -1,8 +1,5 @@
 package DBLayer;
 
-import IDBasic.IDBasic;
-
-
 /**
  * Created by 5thinstall on 7/2/2014.
  * core abstraction of DB Layer

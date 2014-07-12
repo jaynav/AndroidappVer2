@@ -3,7 +3,6 @@ package DBLayer;
 import DBLayer.HelperInterAbs.DBHelpInterFaceAbs;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-
 /**
  * Created by 5thinstall on 7/2/2014.
  */

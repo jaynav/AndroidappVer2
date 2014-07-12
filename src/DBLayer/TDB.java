@@ -6,7 +6,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
-
 /**
  * changing metherd
  *
@@ -92,5 +91,4 @@ public class TDB  extends TDBInterFaceAbstraction {
 private Context mContext;
     private SQLiteDatabase mDatabase;
     private DBHelper.TodoDBHelper mHelper;
-
 }

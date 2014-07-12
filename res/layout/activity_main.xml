@@ -14,10 +14,7 @@
             android:textSize="25dp"
             android:textStyle="bold"
             android:typeface="normal" android:clickable="false"/>
-    <ListView
-            android:layout_width="wrap_content"
-            android:layout_height="269dp"
-            android:id="@android:id/list"/><!--must implement a list activity for it to work-->
+
     <Button
             android:layout_width="wrap_content"
             android:layout_height="74dp"
@@ -25,6 +22,11 @@
             android:id="@+id/NewItemBtn"
             android:onClick="addStuff"
             />
+    <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="269dp"
+            android:id="@android:id/list"/><!--must implement a list activity for it to work-->
+
 
 </LinearLayout>
 

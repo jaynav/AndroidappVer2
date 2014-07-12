@@ -1,6 +1,5 @@
 package com.example.myapp;
 
-
 import DBLayer.TDB;
 import android.app.Activity;
 import android.database.Cursor;
@@ -9,12 +8,10 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
-
 /**
  * Created by ... on 6/23/2014. add activity to manifest
  */
 public class ShowListDetail extends Activity {
-
     @Override
     public void onCreate(Bundle derBundle) {
         super.onCreate(derBundle);
@@ -25,13 +22,10 @@ public class ShowListDetail extends Activity {
         textVeneer2 = (EditText) findViewById(R.id.detailTextView2);
         chBxE = (CheckBox) findViewById(R.id.chBx1);
 
-        //////
         mRowI = null;
-
         if(derBundle == null)
         { //used to edit existing row
             Bundle xtra = getIntent().getExtras();
-
             if(xtra != null && xtra.containsKey(MyActivity.EXTRA_ROWID))
             {
                 //sets value based on key
@@ -43,13 +37,10 @@ public class ShowListDetail extends Activity {
             mRowI =derBundle.getLong(Save_ROW);
         }
 
-
         /////////open new DB Instance
        mDb = new TDB(this);
         mDb.open();
-
         dbToUI();
-
     }
 
     @Override
@@ -70,7 +61,6 @@ public class ShowListDetail extends Activity {
     //on pause goes here
     @Override
     public void onPause()
-
     {
         super.onPause();
        saveDataDB();
@@ -79,11 +69,9 @@ public class ShowListDetail extends Activity {
     //on save goes here
     @Override
     public void onSaveInstanceState(Bundle outSaveState)
-
     {
         super.onSaveInstanceState(outSaveState);
         outSaveState.putLong(Save_ROW, mRowI);
-
     }
 
     //on destroy goes here
@@ -92,9 +80,8 @@ public class ShowListDetail extends Activity {
         super.onDestroy();
       mDb.close();
     }
-///////////////////////////////////////////////////////
-// the finish call forces onpause
 
+//////////////////////////////////////// the finish call forces onpause
     public void cancelData(View derView)
     {
         trashData = true;
@@ -122,11 +109,8 @@ public class ShowListDetail extends Activity {
         }
     }
 
-
     protected void saveDataDB()
     {
-
-
         if(!trashData)
         {
             String DerTitle = textVeneer1.getText().toString();
@@ -142,7 +126,6 @@ public class ShowListDetail extends Activity {
                 mDb.updateRow(mRowI, mDb.createContentValues(DerTitle,CenterSection,chBX));
             }
         }
-
     }
 
     private int checkboxChecked(CheckBox boxEditable)
@@ -153,16 +136,9 @@ public class ShowListDetail extends Activity {
         }
         return 0;
     }
-
-
-
     //////////////////////////////fields/////////////////
-    private  TDB mDb;
-
-    private Long mRowI;
-
+    private  TDB mDb;    private Long mRowI;
     private EditText textVeneer1, textVeneer2;
-    private CheckBox chBxE;
-    private boolean trashData;
+    private CheckBox chBxE;    private boolean trashData;
     public static final String Save_ROW = "saverow";
 }
